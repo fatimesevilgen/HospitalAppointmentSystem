@@ -4,7 +4,8 @@ The **Hospital Appointment System** is a backend application designed to manage 
 
 ##UML Diagram for Entities
 
-![image](https://github.com/user-attachments/assets/738a3329-0169-437c-b6bc-bff6e561c908)
+![image](https://github.com/user-attachments/assets/90ae4a0e-fd36-44bf-8262-021e4e3e1055)
+
 
 
 ## Technologies Used
