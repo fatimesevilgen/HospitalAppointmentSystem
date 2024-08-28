@@ -19,5 +19,4 @@ The **Hospital Appointment System** is a backend application designed to manage 
 - **Swagger**: API documentation and testing.
 - **Postman**: API testing tool.
 - **BCrypt**: Password hashing for securing user passwords.
-- 
 
