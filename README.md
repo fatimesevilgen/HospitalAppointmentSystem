@@ -16,7 +16,6 @@ The **Hospital Appointment System** is a backend application designed to manage 
 - **Java Spring Boot**: Backend framework.
 - **PostgreSQL**: Database systems.
 - **Maven**: Dependency management.
-- **Swagger**: API documentation and testing.
 - **Postman**: API testing tool.
 - **BCrypt**: Password hashing for securing user passwords.
 
