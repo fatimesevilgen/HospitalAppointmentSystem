@@ -3,6 +3,7 @@ package com.appointmensystem.appointmentsystem.services;
 import com.appointmensystem.appointmentsystem.dto.AppointmentCreateDto;
 import com.appointmensystem.appointmentsystem.dto.AppointmentDetailDto;
 import com.appointmensystem.appointmentsystem.dto.AppointmentUpdateStatus;
+import com.appointmensystem.appointmentsystem.dto.DoctorDetailDto;
 import com.appointmensystem.appointmentsystem.entities.Appointment;
 import com.appointmensystem.appointmentsystem.entities.Doctor;
 import com.appointmensystem.appointmentsystem.entities.Patient;
@@ -49,11 +50,13 @@ public class AppointmentService {
 
 
     //GETBYID
-    public DataResult<Appointment> getById(Long id) {
-        if(appointmenRepository.existsById(id)){
-            return new DataResult<>(appointmenRepository.findById(id).get(), true);
+    public DataResult<AppointmentDetailDto> getById(Long id) {
+        Appointment appointment = appointmenRepository.getById(id);
+        if(appointment == null){
+            return new DataResult<>(null, false, "Appointment not found");
         }
-        return new DataResult<>(null, false);
+        AppointmentDetailDto appointmentDetailDto = modelMapper.map(appointment, AppointmentDetailDto.class);
+        return new DataResult<>(appointmentDetailDto, true, "Appointment found");
     }
 
 
@@ -80,23 +83,34 @@ public class AppointmentService {
     }
 
 
-    //List Appointments by Doctor
-    public DataResult<List<Appointment>> listAppointmentsByDoctor(Long id) {
-        if(appointmenRepository.getAllAppointmentsByDoctorId(id).isEmpty()){
-            return new DataResult<>(null, false);
-        }
+    // List Appointments by Doctor
+    public DataResult<List<AppointmentDetailDto>> listAppointmentsByDoctor(Long id) {
         List<Appointment> appointments = appointmenRepository.getAllAppointmentsByDoctorId(id);
-        return new DataResult<>(appointments, true);
+
+        if(appointments.isEmpty()) {
+            return new DataResult<>(null, false, "Appointment not found");
+        }
+
+        List<AppointmentDetailDto> appointmentDetailDtos = appointments.stream()
+                .map(appointment -> modelMapper.map(appointment, AppointmentDetailDto.class))
+                .toList();
+
+        return new DataResult<>(appointmentDetailDtos, true);
     }
 
 
     //List Appointments by Patient
-    public DataResult<List<Appointment>> listAppointmentsByPatient(Long id) {
-        if(appointmenRepository.getAllAppointmentsByPatientId(id).isEmpty()){
+    public DataResult<List<AppointmentDetailDto>> listAppointmentsByPatient(Long id) {
+        List<Appointment> appointmentList = appointmenRepository.getAllAppointmentsByPatientId(id);
+        if(appointmentList.isEmpty()) {
             return new DataResult<>(null, false);
         }
-        List<Appointment> appointmentList = appointmenRepository.getAllAppointmentsByPatientId(id);
-        return new DataResult<>(appointmentList, true);
+
+        List<AppointmentDetailDto> appointmentDetailDtoList = appointmentList.stream()
+                .map(appointment -> modelMapper.map(appointment, AppointmentDetailDto.class))
+                .toList();
+
+        return new DataResult<>(appointmentDetailDtoList, true);
     }
 
 

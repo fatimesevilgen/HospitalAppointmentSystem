@@ -9,7 +9,7 @@ import com.appointmensystem.appointmentsystem.services.AppointmentService;
 import com.appointmensystem.appointmentsystem.utilities.DataResult;
 import com.appointmensystem.appointmentsystem.utilities.Result;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/appointment")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
+    public AppointmentController(AppointmentService _appointmentService){
+        appointmentService = _appointmentService;
+    }
 
     @PostMapping("/add")
     public ResponseEntity<Result> add(@Valid @RequestBody AppointmentCreateDto args){
@@ -48,7 +50,7 @@ public class AppointmentController {
 
 
     @GetMapping("/getById")
-    public ResponseEntity<DataResult<Appointment>> getById(@RequestParam Long id){
+    public ResponseEntity<DataResult<AppointmentDetailDto>> getById(@RequestParam Long id){
         try {
             return new ResponseEntity<>(appointmentService.getById(id), HttpStatus.OK);
         }
@@ -81,7 +83,7 @@ public class AppointmentController {
 
 
     @GetMapping("/listAppointmentsByDoctor")
-    public ResponseEntity<DataResult<List<Appointment>>> listAppointmentsByDoctor(@RequestParam Long id){
+    public ResponseEntity<DataResult<List<AppointmentDetailDto>>> listAppointmentsByDoctor(@RequestParam Long id){
         try {
             return new ResponseEntity<>(appointmentService.listAppointmentsByDoctor(id),HttpStatus.OK);
         }
@@ -92,7 +94,7 @@ public class AppointmentController {
 
 
     @GetMapping("/listAppointmentsByPatient")
-    public ResponseEntity<DataResult<List<Appointment>>> listAppointmentsByPatient(@RequestParam Long id){
+    public ResponseEntity<DataResult<List<AppointmentDetailDto>>> listAppointmentsByPatient(@RequestParam Long id){
         try {
             return new ResponseEntity<>(appointmentService.listAppointmentsByPatient(id),HttpStatus.OK);
         }

@@ -28,7 +28,7 @@ public class DoctorController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/register")
-    public ResponseEntity<Result> doctorRegister(@Valid @RequestBody DoctorRegisterDto args, BindingResult result) {
+    public ResponseEntity<Result> doctorRegister(@Valid @RequestBody DoctorRegisterDto args) {
         try {
             return new ResponseEntity<>(doctorService.doctorRegister(args), HttpStatus.CREATED);
         }
